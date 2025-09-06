@@ -14,7 +14,272 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      exams: {
+        Row: {
+          created_at: string
+          exam_date: string
+          exam_type: string
+          file_url: string | null
+          id: string
+          name: string
+          notes: string | null
+          patient_profile_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          exam_date: string
+          exam_type: string
+          file_url?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          patient_profile_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          exam_date?: string
+          exam_type?: string
+          file_url?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          patient_profile_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exams_patient_profile_id_fkey"
+            columns: ["patient_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medical_history: {
+        Row: {
+          created_at: string
+          description: string
+          evaluating_professional: string | null
+          history_date: string
+          id: string
+          patient_profile_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          evaluating_professional?: string | null
+          history_date?: string
+          id?: string
+          patient_profile_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          evaluating_professional?: string | null
+          history_date?: string
+          id?: string
+          patient_profile_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_history_patient_profile_id_fkey"
+            columns: ["patient_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medications: {
+        Row: {
+          created_at: string
+          dose: string
+          end_date: string | null
+          frequency: string
+          id: string
+          name: string
+          patient_profile_id: string
+          start_date: string
+          still_in_use: boolean | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dose: string
+          end_date?: string | null
+          frequency: string
+          id?: string
+          name: string
+          patient_profile_id: string
+          start_date: string
+          still_in_use?: boolean | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dose?: string
+          end_date?: string | null
+          frequency?: string
+          id?: string
+          name?: string
+          patient_profile_id?: string
+          start_date?: string
+          still_in_use?: boolean | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medications_patient_profile_id_fkey"
+            columns: ["patient_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          access_token: string
+          birth_date: string | null
+          cpf: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          patient_id: string | null
+          phone: string | null
+          professional_id: string
+          updated_at: string
+        }
+        Insert: {
+          access_token?: string
+          birth_date?: string | null
+          cpf?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          patient_id?: string | null
+          phone?: string | null
+          professional_id: string
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string
+          birth_date?: string | null
+          cpf?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          patient_id?: string | null
+          phone?: string | null
+          professional_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patients_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "patients_professional_id_fkey"
+            columns: ["professional_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          birth_date: string | null
+          cpf: string | null
+          created_at: string
+          full_name: string
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+          user_type: string
+        }
+        Insert: {
+          birth_date?: string | null
+          cpf?: string | null
+          created_at?: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+          user_type: string
+        }
+        Update: {
+          birth_date?: string | null
+          cpf?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+          user_type?: string
+        }
+        Relationships: []
+      }
+      vaccines: {
+        Row: {
+          created_at: string
+          id: string
+          location: string | null
+          name: string
+          patient_profile_id: string
+          proof_file_url: string | null
+          updated_at: string
+          vaccine_date: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location?: string | null
+          name: string
+          patient_profile_id: string
+          proof_file_url?: string | null
+          updated_at?: string
+          vaccine_date: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string | null
+          name?: string
+          patient_profile_id?: string
+          proof_file_url?: string | null
+          updated_at?: string
+          vaccine_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaccines_patient_profile_id_fkey"
+            columns: ["patient_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
