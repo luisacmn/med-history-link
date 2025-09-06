@@ -1,11 +1,50 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Hero from "@/components/landing/Hero";
+import PricingSection from "@/components/pricing/PricingSection";
+import AuthModal from "@/components/auth/AuthModal";
+import ProfessionalDashboard from "@/components/dashboard/ProfessionalDashboard";
+import PatientDashboard from "@/components/dashboard/PatientDashboard";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
+  // Demo state to simulate user authentication and type
+  const [userType, setUserType] = useState<"guest" | "professional" | "patient">("guest");
+
+  if (userType === "professional") {
+    return <ProfessionalDashboard />;
+  }
+
+  if (userType === "patient") {
+    return <PatientDashboard />;
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen">
+      <Hero />
+      <PricingSection />
+      
+      {/* Demo Navigation - Remove in production */}
+      <div className="fixed bottom-4 right-4 flex flex-col gap-2 p-4 bg-card rounded-lg soft-shadow">
+        <p className="text-xs text-muted-foreground mb-2">Demo Navigation:</p>
+        <Button 
+          variant="medical" 
+          size="sm"
+          onClick={() => setUserType("professional")}
+        >
+          Ver Dashboard Profissional
+        </Button>
+        <Button 
+          variant="accent" 
+          size="sm"
+          onClick={() => setUserType("patient")}
+        >
+          Ver Dashboard Paciente
+        </Button>
+        <AuthModal>
+          <Button variant="outline" size="sm">
+            Modal de Login
+          </Button>
+        </AuthModal>
       </div>
     </div>
   );
