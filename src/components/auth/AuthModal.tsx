@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Stethoscope, User, UserPlus, Mail, Lock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface AuthModalProps {
   children: React.ReactNode;
@@ -13,9 +14,39 @@ interface AuthModalProps {
 
 const AuthModal = ({ children }: AuthModalProps) => {
   const [userType, setUserType] = useState<"professional" | "patient">("professional");
+  const [isOpen, setIsOpen] = useState(false);
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [registerData, setRegisterData] = useState({ name: "", email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await signIn(loginData.email, loginData.password);
+    if (!error) {
+      setIsOpen(false);
+      setLoginData({ email: "", password: "" });
+    }
+    setLoading(false);
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await signUp(registerData.email, registerData.password, {
+      full_name: registerData.name,
+      user_type: userType
+    });
+    if (!error) {
+      setIsOpen(false);
+      setRegisterData({ name: "", email: "", password: "" });
+    }
+    setLoading(false);
+  };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -39,116 +70,137 @@ const AuthModal = ({ children }: AuthModalProps) => {
               
               {/* Login Form */}
               <TabsContent value="login" className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email-login">E-mail</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="email-login"
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="pl-10"
-                    />
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email-login">E-mail</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="email-login"
+                        type="email"
+                        placeholder="seu@email.com"
+                        className="pl-10"
+                        value={loginData.email}
+                        onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="password-login">Senha</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="password-login"
-                      type="password"
-                      placeholder="Digite sua senha"
-                      className="pl-10"
-                    />
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="password-login">Senha</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="password-login"
+                        type="password"
+                        placeholder="Digite sua senha"
+                        className="pl-10"
+                        value={loginData.password}
+                        onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
-                
-                <Button className="w-full" variant="medical">
-                  Entrar
-                </Button>
-                
-                <div className="text-center">
-                  <Button variant="link" className="text-sm">
-                    Esqueceu sua senha?
+                  
+                  <Button type="submit" className="w-full" variant="medical" disabled={loading}>
+                    {loading ? "Entrando..." : "Entrar"}
                   </Button>
-                </div>
+                  
+                  <div className="text-center">
+                    <Button type="button" variant="link" className="text-sm">
+                      Esqueceu sua senha?
+                    </Button>
+                  </div>
+                </form>
               </TabsContent>
               
               {/* Register Form */}
               <TabsContent value="register" className="space-y-4">
-                {/* User Type Selection */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <Button
-                    type="button"
-                    variant={userType === "professional" ? "medical" : "outline"}
-                    onClick={() => setUserType("professional")}
-                    className="flex flex-col h-20 gap-2"
+                <form onSubmit={handleRegister} className="space-y-4">
+                  {/* User Type Selection */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <Button
+                      type="button"
+                      variant={userType === "professional" ? "medical" : "outline"}
+                      onClick={() => setUserType("professional")}
+                      className="flex flex-col h-20 gap-2"
+                    >
+                      <Stethoscope className="w-5 h-5" />
+                      <span className="text-xs">Profissional</span>
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={userType === "patient" ? "accent" : "outline"}
+                      onClick={() => setUserType("patient")}
+                      className="flex flex-col h-20 gap-2"
+                    >
+                      <User className="w-5 h-5" />
+                      <span className="text-xs">Paciente</span>
+                    </Button>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Nome Completo</Label>
+                    <div className="relative">
+                      <UserPlus className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="Seu nome completo"
+                        className="pl-10"
+                        value={registerData.name}
+                        onChange={(e) => setRegisterData({...registerData, name: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="email-register">E-mail</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="email-register"
+                        type="email"
+                        placeholder="seu@email.com"
+                        className="pl-10"
+                        value={registerData.email}
+                        onChange={(e) => setRegisterData({...registerData, email: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="password-register">Senha</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="password-register"
+                        type="password"
+                        placeholder="Crie uma senha segura"
+                        className="pl-10"
+                        value={registerData.password}
+                        onChange={(e) => setRegisterData({...registerData, password: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    type="submit"
+                    className="w-full" 
+                    variant={userType === "professional" ? "medical" : "accent"}
+                    disabled={loading}
                   >
-                    <Stethoscope className="w-5 h-5" />
-                    <span className="text-xs">Profissional</span>
+                    {loading ? "Criando..." : `Criar Conta ${userType === "professional" ? "Profissional" : "de Paciente"}`}
                   </Button>
-                  <Button
-                    type="button"
-                    variant={userType === "patient" ? "accent" : "outline"}
-                    onClick={() => setUserType("patient")}
-                    className="flex flex-col h-20 gap-2"
-                  >
-                    <User className="w-5 h-5" />
-                    <span className="text-xs">Paciente</span>
-                  </Button>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nome Completo</Label>
-                  <div className="relative">
-                    <UserPlus className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Seu nome completo"
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email-register">E-mail</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="email-register"
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="password-register">Senha</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="password-register"
-                      type="password"
-                      placeholder="Crie uma senha segura"
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                
-                <Button 
-                  className="w-full" 
-                  variant={userType === "professional" ? "medical" : "accent"}
-                >
-                  Criar Conta {userType === "professional" ? "Profissional" : "de Paciente"}
-                </Button>
-                
-                <p className="text-xs text-muted-foreground text-center">
-                  Ao criar uma conta, você concorda com nossos termos de uso e política de privacidade.
-                </p>
+                  
+                  <p className="text-xs text-muted-foreground text-center">
+                    Ao criar uma conta, você concorda com nossos termos de uso e política de privacidade.
+                  </p>
+                </form>
               </TabsContent>
             </Tabs>
           </CardContent>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,88 +12,67 @@ import {
   Plus,
   User,
   Calendar,
-  Download
+  Download,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import AddExamModal from "@/components/modals/AddExamModal";
+import AddMedicationModal from "@/components/modals/AddMedicationModal";
+import AddVaccineModal from "@/components/modals/AddVaccineModal";
+import AddHistoryModal from "@/components/modals/AddHistoryModal";
 
 const PatientDashboard = () => {
   const [activeTab, setActiveTab] = useState("exams");
+  const [exams, setExams] = useState<any[]>([]);
+  const [vaccines, setVaccines] = useState<any[]>([]);
+  const [medications, setMedications] = useState<any[]>([]);
+  const [history, setHistory] = useState<any[]>([]);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const { user, signOut } = useAuth();
 
-  const exams = [
-    {
-      id: 1,
-      name: "Hemograma Completo",
-      date: "15/12/2024",
-      type: "Laboratório",
-      file: "hemograma-12-2024.pdf"
-    },
-    {
-      id: 2,
-      name: "Raio-X Tórax",
-      date: "10/12/2024",
-      type: "Imagem",
-      file: "raio-x-torax.pdf"
-    },
-    {
-      id: 3,
-      name: "Eletrocardiograma",
-      date: "05/12/2024",
-      type: "Cardiológico",
-      file: "ecg-dezembro.pdf"
-    }
-  ];
+  const fetchData = async () => {
+    if (!user) return;
+    
+    try {
+      // Get user's profile first
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
 
-  const vaccines = [
-    {
-      id: 1,
-      name: "COVID-19 (4ª dose)",
-      date: "01/11/2024",
-      batch: "CV2024001",
-      location: "UBS Centro"
-    },
-    {
-      id: 2,
-      name: "Influenza 2024",
-      date: "15/03/2024",
-      batch: "FLU24003",
-      location: "Clínica Particular"
-    }
-  ];
+      if (profile) {
+        setUserProfile(profile);
+        
+        // Fetch all medical data in parallel
+        const [examsRes, vaccinesRes, medicationsRes, historyRes] = await Promise.all([
+          supabase.from('exams').select('*').eq('patient_profile_id', profile.id).order('exam_date', { ascending: false }),
+          supabase.from('vaccines').select('*').eq('patient_profile_id', profile.id).order('vaccine_date', { ascending: false }),
+          supabase.from('medications').select('*').eq('patient_profile_id', profile.id).order('start_date', { ascending: false }),
+          supabase.from('medical_history').select('*').eq('patient_profile_id', profile.id).order('history_date', { ascending: false })
+        ]);
 
-  const medications = [
-    {
-      id: 1,
-      name: "Losartana 50mg",
-      dosage: "1 comprimido",
-      frequency: "1x ao dia",
-      startDate: "01/10/2024",
-      status: "Ativo"
-    },
-    {
-      id: 2,
-      name: "Omeprazol 20mg",
-      dosage: "1 cápsula",
-      frequency: "1x ao dia (jejum)",
-      startDate: "15/11/2024",
-      status: "Ativo"
+        setExams(examsRes.data || []);
+        setVaccines(vaccinesRes.data || []);
+        setMedications(medicationsRes.data || []);
+        setHistory(historyRes.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  const history = [
-    {
-      id: 1,
-      date: "15/12/2024",
-      type: "Consulta",
-      description: "Consulta cardiológica de rotina. Pressão arterial controlada.",
-      professional: "Dr. João Médico"
-    },
-    {
-      id: 2,
-      date: "10/12/2024",
-      type: "Exame",
-      description: "Realização de Raio-X do tórax. Resultado normal.",
-      professional: "Clínica RadiMed"
-    }
-  ];
+  useEffect(() => {
+    fetchData();
+  }, [user]);
+
+  const handleDataAdded = () => {
+    fetchData();
+  };
 
   const stats = [
     {
@@ -110,7 +89,7 @@ const PatientDashboard = () => {
     },
     {
       title: "Medicações",
-      value: medications.filter(m => m.status === "Ativo").length,
+      value: medications.filter(m => m.still_in_use).length,
       icon: Pill,
       color: "text-primary"
     },
@@ -121,6 +100,17 @@ const PatientDashboard = () => {
       color: "text-accent"
     }
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Carregando dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -133,18 +123,18 @@ const PatientDashboard = () => {
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">Maria Silva</h1>
-                <p className="text-sm text-muted-foreground">Paciente - Dr. João Médico</p>
+                <h1 className="text-xl font-bold text-foreground">{userProfile?.full_name || 'Paciente'}</h1>
+                <p className="text-sm text-muted-foreground">Dashboard do Paciente</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
-              <Badge variant="default" className="bg-accent">
-                Próxima consulta: 22/12
-              </Badge>
               <Button variant="outline">
-                <Calendar className="w-4 h-4" />
-                Agendar
+                <Download className="w-4 h-4" />
+                Exportar PDF
+              </Button>
+              <Button variant="ghost" size="sm" onClick={signOut}>
+                <LogOut className="w-4 h-4" />
               </Button>
             </div>
           </div>
@@ -191,34 +181,51 @@ const PatientDashboard = () => {
               <TabsContent value="exams" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Exames</h3>
-                  <Button variant="medical">
-                    <Upload className="w-4 h-4" />
-                    Adicionar Exame
-                  </Button>
+                  <AddExamModal onExamAdded={handleDataAdded}>
+                    <Button variant="medical">
+                      <Upload className="w-4 h-4" />
+                      Adicionar Exame
+                    </Button>
+                  </AddExamModal>
                 </div>
                 
                 <div className="space-y-3">
-                  {exams.map((exam) => (
-                    <Card key={exam.id} className="border">
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <FileText className="w-8 h-8 text-primary" />
-                            <div>
-                              <h4 className="font-medium text-foreground">{exam.name}</h4>
-                              <p className="text-sm text-muted-foreground">{exam.date} • {exam.type}</p>
+                  {exams.length === 0 ? (
+                    <div className="text-center py-8">
+                      <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                      <p className="text-muted-foreground">Nenhum exame cadastrado ainda</p>
+                    </div>
+                  ) : (
+                    exams.map((exam) => {
+                      const formattedDate = new Date(exam.exam_date).toLocaleDateString('pt-BR');
+                      return (
+                        <Card key={exam.id} className="border">
+                          <CardContent className="p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <FileText className="w-8 h-8 text-primary" />
+                                <div>
+                                  <h4 className="font-medium text-foreground">{exam.name}</h4>
+                                  <p className="text-sm text-muted-foreground">{formattedDate} • {exam.exam_type}</p>
+                                  {exam.notes && (
+                                    <p className="text-xs text-muted-foreground mt-1">{exam.notes}</p>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="secondary">{exam.exam_type}</Badge>
+                                {exam.file_url && (
+                                  <Button variant="ghost" size="sm" onClick={() => window.open(exam.file_url, '_blank')}>
+                                    <Download className="w-4 h-4" />
+                                  </Button>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Badge variant="secondary">{exam.type}</Badge>
-                            <Button variant="ghost" size="sm">
-                              <Download className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                          </CardContent>
+                        </Card>
+                      );
+                    })
+                  )}
                 </div>
               </TabsContent>
               
@@ -226,10 +233,12 @@ const PatientDashboard = () => {
               <TabsContent value="vaccines" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Cartão de Vacinação</h3>
-                  <Button variant="accent">
-                    <Plus className="w-4 h-4" />
-                    Adicionar Vacina
-                  </Button>
+                  <AddVaccineModal onVaccineAdded={handleDataAdded}>
+                    <Button variant="accent">
+                      <Plus className="w-4 h-4" />
+                      Adicionar Vacina
+                    </Button>
+                  </AddVaccineModal>
                 </div>
                 
                 <div className="space-y-3">
@@ -259,10 +268,12 @@ const PatientDashboard = () => {
               <TabsContent value="medications" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Medicações Atuais</h3>
-                  <Button variant="medical">
-                    <Plus className="w-4 h-4" />
-                    Adicionar Medicação
-                  </Button>
+                  <AddMedicationModal onMedicationAdded={handleDataAdded}>
+                    <Button variant="medical">
+                      <Plus className="w-4 h-4" />
+                      Adicionar Medicação
+                    </Button>
+                  </AddMedicationModal>
                 </div>
                 
                 <div className="space-y-3">
@@ -298,10 +309,12 @@ const PatientDashboard = () => {
               <TabsContent value="history" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Histórico Clínico</h3>
-                  <Button variant="accent">
-                    <Plus className="w-4 h-4" />
-                    Adicionar Entrada
-                  </Button>
+                  <AddHistoryModal onHistoryAdded={handleDataAdded}>
+                    <Button variant="accent">
+                      <Plus className="w-4 h-4" />
+                      Adicionar Entrada
+                    </Button>
+                  </AddHistoryModal>
                 </div>
                 
                 <div className="space-y-3">

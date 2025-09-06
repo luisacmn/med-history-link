@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Stethoscope, Shield, Users, FileText } from "lucide-react";
 import medicalIcon from "@/assets/medical-icon.png";
+import AuthModal from "@/components/auth/AuthModal";
 
 const Hero = () => {
   return (
@@ -27,9 +28,11 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <Button size="lg" variant="medical" className="text-lg px-8 py-6">
-                Começar Gratuitamente
-              </Button>
+              <AuthModal>
+                <Button size="lg" variant="medical" className="text-lg px-8 py-6">
+                  Começar Gratuitamente
+                </Button>
+              </AuthModal>
               <Button size="lg" variant="outline" className="text-lg px-8 py-6">
                 Ver Demonstração
               </Button>
