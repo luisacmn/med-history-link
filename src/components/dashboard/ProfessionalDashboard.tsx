@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Users, Plus, Search, FileText, Calendar, MoreVertical, Stethoscope, Activity } from "lucide-react";
+import { Users, Plus, Search, FileText, Calendar, MoreVertical, Stethoscope, Activity, LogOut } from "lucide-react";
 import AddPatientModal from "@/components/modals/AddPatientModal";
+import { useAuth } from "@/hooks/useAuth";
 const ProfessionalDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [addPatientModalOpen, setAddPatientModalOpen] = useState(false);
+  const { signOut, user } = useAuth();
   const patients = [{
     id: 1,
     name: "Maria Silva",
@@ -85,10 +87,20 @@ const ProfessionalDashboard = () => {
               </div>
             </div>
             
-            <Button variant="medical" onClick={() => setAddPatientModalOpen(true)}>
-              <Plus className="w-4 h-4" />
-              Add Patient
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button variant="medical" onClick={() => setAddPatientModalOpen(true)}>
+                <Plus className="w-4 h-4" />
+                Add Patient
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={signOut}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
           </div>
         </div>
       </header>

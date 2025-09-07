@@ -13,17 +13,20 @@ import {
   User,
   Calendar,
   Download,
-  FileDown
+  FileDown,
+  LogOut
 } from "lucide-react";
 import UploadDocumentModal from "@/components/modals/UploadDocumentModal";
 import { exportMedicalHistoryToPDF } from "@/utils/pdfExport";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 const PatientDashboard = () => {
   const [activeTab, setActiveTab] = useState("exams");
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const [uploadType, setUploadType] = useState<"exams" | "vaccines" | "medications" | "history">("exams");
   const { toast } = useToast();
+  const { signOut, user } = useAuth();
 
   const exams = [
     {
@@ -173,14 +176,14 @@ const PatientDashboard = () => {
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">Maria Silva</h1>
-                <p className="text-sm text-muted-foreground">Patient - Dr. João Médico</p>
+                <h1 className="text-xl font-bold text-foreground">{user?.email || "Patient"}</h1>
+                <p className="text-sm text-muted-foreground">Patient - Digital Medical Records</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
               <Badge variant="default" className="bg-accent">
-                Next appointment: 22/12
+                Next appointment: Dec 22
               </Badge>
               <Button variant="outline" onClick={handleExportPDF}>
                 <FileDown className="w-4 h-4" />
@@ -189,6 +192,14 @@ const PatientDashboard = () => {
               <Button variant="outline">
                 <Calendar className="w-4 h-4" />
                 Schedule
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={signOut}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
               </Button>
             </div>
           </div>
