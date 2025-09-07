@@ -12,11 +12,18 @@ import {
   Plus,
   User,
   Calendar,
-  Download
+  Download,
+  FileDown
 } from "lucide-react";
+import UploadDocumentModal from "@/components/modals/UploadDocumentModal";
+import { exportMedicalHistoryToPDF } from "@/utils/pdfExport";
+import { useToast } from "@/hooks/use-toast";
 
 const PatientDashboard = () => {
   const [activeTab, setActiveTab] = useState("exams");
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [uploadType, setUploadType] = useState<"exams" | "vaccines" | "medications" | "history">("exams");
+  const { toast } = useToast();
 
   const exams = [
     {
@@ -122,6 +129,39 @@ const PatientDashboard = () => {
     }
   ];
 
+  const openUploadModal = (type: "exams" | "vaccines" | "medications" | "history") => {
+    setUploadType(type);
+    setUploadModalOpen(true);
+  };
+
+  const handleExportPDF = async () => {
+    try {
+      toast({
+        title: "Generating PDF...",
+        description: "Please wait while we prepare your medical history."
+      });
+
+      await exportMedicalHistoryToPDF(
+        { exams, vaccines, medications, history },
+        { 
+          patientName: "Maria Silva",
+          professionalName: "Dr. João Médico"
+        }
+      );
+
+      toast({
+        title: "PDF exported successfully",
+        description: "Your medical history has been downloaded."
+      });
+    } catch (error) {
+      toast({
+        title: "Export failed",
+        description: "There was an error generating the PDF. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -142,6 +182,10 @@ const PatientDashboard = () => {
               <Badge variant="default" className="bg-accent">
                 Próxima consulta: 22/12
               </Badge>
+              <Button variant="outline" onClick={handleExportPDF}>
+                <FileDown className="w-4 h-4" />
+                Export PDF
+              </Button>
               <Button variant="outline">
                 <Calendar className="w-4 h-4" />
                 Agendar
@@ -191,7 +235,7 @@ const PatientDashboard = () => {
               <TabsContent value="exams" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Exames</h3>
-                  <Button variant="medical">
+                  <Button variant="medical" onClick={() => openUploadModal("exams")}>
                     <Upload className="w-4 h-4" />
                     Adicionar Exame
                   </Button>
@@ -226,7 +270,7 @@ const PatientDashboard = () => {
               <TabsContent value="vaccines" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Cartão de Vacinação</h3>
-                  <Button variant="accent">
+                  <Button variant="accent" onClick={() => openUploadModal("vaccines")}>
                     <Plus className="w-4 h-4" />
                     Adicionar Vacina
                   </Button>
@@ -259,7 +303,7 @@ const PatientDashboard = () => {
               <TabsContent value="medications" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Medicações Atuais</h3>
-                  <Button variant="medical">
+                  <Button variant="medical" onClick={() => openUploadModal("medications")}>
                     <Plus className="w-4 h-4" />
                     Adicionar Medicação
                   </Button>
@@ -298,7 +342,7 @@ const PatientDashboard = () => {
               <TabsContent value="history" className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold">Histórico Clínico</h3>
-                  <Button variant="accent">
+                  <Button variant="accent" onClick={() => openUploadModal("history")}>
                     <Plus className="w-4 h-4" />
                     Adicionar Entrada
                   </Button>
@@ -328,6 +372,13 @@ const PatientDashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Upload Modal */}
+      <UploadDocumentModal
+        isOpen={uploadModalOpen}
+        onClose={() => setUploadModalOpen(false)}
+        documentType={uploadType}
+      />
     </div>
   );
 };

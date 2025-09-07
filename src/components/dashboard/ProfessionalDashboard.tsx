@@ -4,8 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Users, Plus, Search, FileText, Calendar, MoreVertical, Stethoscope, Activity } from "lucide-react";
+import AddPatientModal from "@/components/modals/AddPatientModal";
 const ProfessionalDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [addPatientModalOpen, setAddPatientModalOpen] = useState(false);
   const patients = [{
     id: 1,
     name: "Maria Silva",
@@ -83,7 +85,7 @@ const ProfessionalDashboard = () => {
               </div>
             </div>
             
-            <Button variant="medical">
+            <Button variant="medical" onClick={() => setAddPatientModalOpen(true)}>
               <Plus className="w-4 h-4" />
               Adicionar Paciente
             </Button>
@@ -180,7 +182,7 @@ const ProfessionalDashboard = () => {
                 <p className="text-muted-foreground mb-6">
                   Comece adicionando seu primeiro paciente ou enviando um convite
                 </p>
-                <Button variant="medical">
+                <Button variant="medical" onClick={() => setAddPatientModalOpen(true)}>
                   <Plus className="w-4 h-4" />
                   Adicionar Primeiro Paciente
                 </Button>
@@ -188,6 +190,12 @@ const ProfessionalDashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Add Patient Modal */}
+      <AddPatientModal
+        isOpen={addPatientModalOpen}
+        onClose={() => setAddPatientModalOpen(false)}
+      />
     </div>;
 };
 export default ProfessionalDashboard;
