@@ -333,19 +333,28 @@ const UploadDocumentModal = ({ isOpen, onClose, documentType }: UploadDocumentMo
           <div className="space-y-2">
             <Label>Document File *</Label>
             {!selectedFile ? (
-              <label className="block border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                 <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
                 <div className="space-y-1">
                   <p className="text-sm font-medium">Click to upload or drag and drop</p>
                   <p className="text-xs text-muted-foreground">PDF, JPG, PNG up to 5MB</p>
                 </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="mt-3"
+                  onClick={() => document.getElementById('file-upload')?.click()}
+                >
+                  Choose File
+                </Button>
                 <Input
+                  id="file-upload"
                   type="file"
                   onChange={handleFileSelect}
                   accept=".pdf,.jpg,.jpeg,.png"
                   className="hidden"
                 />
-              </label>
+              </div>
             ) : (
               <Card>
                 <CardContent className="p-4">
