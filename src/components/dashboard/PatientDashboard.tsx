@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { 
   FileText, 
   Syringe, 
@@ -13,7 +14,10 @@ import {
   User,
   Calendar,
   Download,
-  FileDown
+  FileDown,
+  MoreVertical,
+  Edit,
+  Trash2
 } from "lucide-react";
 import UploadDocumentModal from "@/components/modals/UploadDocumentModal";
 import { exportMedicalHistoryToPDF } from "@/utils/pdfExport";
@@ -253,12 +257,32 @@ const PatientDashboard = () => {
                               <p className="text-sm text-muted-foreground">{exam.date} • {exam.type}</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Badge variant="secondary">{exam.type}</Badge>
-                            <Button variant="ghost" size="sm">
-                              <Download className="w-4 h-4" />
-                            </Button>
-                          </div>
+                           <div className="flex items-center gap-2">
+                             <Badge variant="secondary">{exam.type}</Badge>
+                             <Button variant="ghost" size="sm">
+                               <Download className="w-4 h-4" />
+                             </Button>
+                             <DropdownMenu>
+                               <DropdownMenuTrigger asChild>
+                                 <Button variant="ghost" size="sm">
+                                   <MoreVertical className="w-4 h-4" />
+                                 </Button>
+                               </DropdownMenuTrigger>
+                               <DropdownMenuContent align="end">
+                                 <DropdownMenuItem onClick={() => console.log('Edit exam', exam.id)}>
+                                   <Edit className="w-4 h-4 mr-2" />
+                                   Edit
+                                 </DropdownMenuItem>
+                                 <DropdownMenuItem 
+                                   onClick={() => console.log('Delete exam', exam.id)}
+                                   className="text-destructive"
+                                 >
+                                   <Trash2 className="w-4 h-4 mr-2" />
+                                   Delete
+                                 </DropdownMenuItem>
+                               </DropdownMenuContent>
+                             </DropdownMenu>
+                           </div>
                         </div>
                       </CardContent>
                     </Card>
@@ -291,7 +315,29 @@ const PatientDashboard = () => {
                               <p className="text-xs text-muted-foreground">{vaccine.location}</p>
                             </div>
                           </div>
-                          <Badge variant="default">Applied</Badge>
+                           <div className="flex items-center gap-2">
+                             <Badge variant="default">Applied</Badge>
+                             <DropdownMenu>
+                               <DropdownMenuTrigger asChild>
+                                 <Button variant="ghost" size="sm">
+                                   <MoreVertical className="w-4 h-4" />
+                                 </Button>
+                               </DropdownMenuTrigger>
+                               <DropdownMenuContent align="end">
+                                 <DropdownMenuItem onClick={() => console.log('Edit vaccine', vaccine.id)}>
+                                   <Edit className="w-4 h-4 mr-2" />
+                                   Edit
+                                 </DropdownMenuItem>
+                                 <DropdownMenuItem 
+                                   onClick={() => console.log('Delete vaccine', vaccine.id)}
+                                   className="text-destructive"
+                                 >
+                                   <Trash2 className="w-4 h-4 mr-2" />
+                                   Delete
+                                 </DropdownMenuItem>
+                               </DropdownMenuContent>
+                             </DropdownMenu>
+                           </div>
                         </div>
                       </CardContent>
                     </Card>
@@ -326,11 +372,33 @@ const PatientDashboard = () => {
                               </p>
                             </div>
                           </div>
-                          <Badge 
-                            variant={medication.status === "Active" ? "default" : "secondary"}
-                          >
-                            {medication.status}
-                          </Badge>
+                           <div className="flex items-center gap-2">
+                             <Badge 
+                               variant={medication.status === "Active" ? "default" : "secondary"}
+                             >
+                               {medication.status}
+                             </Badge>
+                             <DropdownMenu>
+                               <DropdownMenuTrigger asChild>
+                                 <Button variant="ghost" size="sm">
+                                   <MoreVertical className="w-4 h-4" />
+                                 </Button>
+                               </DropdownMenuTrigger>
+                               <DropdownMenuContent align="end">
+                                 <DropdownMenuItem onClick={() => console.log('Edit medication', medication.id)}>
+                                   <Edit className="w-4 h-4 mr-2" />
+                                   Edit
+                                 </DropdownMenuItem>
+                                 <DropdownMenuItem 
+                                   onClick={() => console.log('Delete medication', medication.id)}
+                                   className="text-destructive"
+                                 >
+                                   <Trash2 className="w-4 h-4 mr-2" />
+                                   Delete
+                                 </DropdownMenuItem>
+                               </DropdownMenuContent>
+                             </DropdownMenu>
+                           </div>
                         </div>
                       </CardContent>
                     </Card>
@@ -352,17 +420,37 @@ const PatientDashboard = () => {
                   {history.map((entry) => (
                     <Card key={entry.id} className="border">
                       <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <History className="w-8 h-8 text-accent mt-1" />
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h4 className="font-medium text-foreground">{entry.type}</h4>
-                              <Badge variant="outline">{entry.date}</Badge>
-                            </div>
-                            <p className="text-sm text-foreground mb-1">{entry.description}</p>
-                            <p className="text-xs text-muted-foreground">{entry.professional}</p>
-                          </div>
-                        </div>
+                         <div className="flex items-start gap-3">
+                           <History className="w-8 h-8 text-accent mt-1" />
+                           <div className="flex-1">
+                             <div className="flex items-center gap-2 mb-2">
+                               <h4 className="font-medium text-foreground">{entry.type}</h4>
+                               <Badge variant="outline">{entry.date}</Badge>
+                             </div>
+                             <p className="text-sm text-foreground mb-1">{entry.description}</p>
+                             <p className="text-xs text-muted-foreground">{entry.professional}</p>
+                           </div>
+                           <DropdownMenu>
+                             <DropdownMenuTrigger asChild>
+                               <Button variant="ghost" size="sm">
+                                 <MoreVertical className="w-4 h-4" />
+                               </Button>
+                             </DropdownMenuTrigger>
+                             <DropdownMenuContent align="end">
+                               <DropdownMenuItem onClick={() => console.log('Edit history', entry.id)}>
+                                 <Edit className="w-4 h-4 mr-2" />
+                                 Edit
+                               </DropdownMenuItem>
+                               <DropdownMenuItem 
+                                 onClick={() => console.log('Delete history', entry.id)}
+                                 className="text-destructive"
+                               >
+                                 <Trash2 className="w-4 h-4 mr-2" />
+                                 Delete
+                               </DropdownMenuItem>
+                             </DropdownMenuContent>
+                           </DropdownMenu>
+                         </div>
                       </CardContent>
                     </Card>
                   ))}

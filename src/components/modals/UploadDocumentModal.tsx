@@ -84,7 +84,11 @@ const UploadDocumentModal = ({ isOpen, onClose, documentType }: UploadDocumentMo
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedFile) {
+    
+    // File is optional for medications and history
+    const isFileRequired = documentType === "exams" || documentType === "vaccines";
+    
+    if (isFileRequired && !selectedFile) {
       toast({
         title: "File required",
         description: "Please select a file to upload.",
@@ -331,7 +335,9 @@ const UploadDocumentModal = ({ isOpen, onClose, documentType }: UploadDocumentMo
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* File Upload Section */}
           <div className="space-y-2">
-            <Label>Document File *</Label>
+            <Label>
+              Document File {(documentType === "medications" || documentType === "history") ? "(Optional)" : "*"}
+            </Label>
             {!selectedFile ? (
               <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                 <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
@@ -433,9 +439,13 @@ const UploadDocumentModal = ({ isOpen, onClose, documentType }: UploadDocumentMo
             <Button 
               type="submit" 
               className="flex-1" 
-              disabled={isUploading || !selectedFile || uploadStatus === "success"}
+              disabled={isUploading || uploadStatus === "success" || 
+                ((documentType === "exams" || documentType === "vaccines") && !selectedFile)}
             >
-              {isUploading ? "Uploading..." : "Upload Document"}
+              {isUploading ? "Uploading..." : 
+                (documentType === "medications" || documentType === "history") ? 
+                  (selectedFile ? "Upload Document" : "Save Entry") : 
+                  "Upload Document"}
             </Button>
           </div>
         </form>
