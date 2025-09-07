@@ -2,6 +2,8 @@
 
 ![Status](https://img.shields.io/badge/status-MVP-yellow)
 
+![Landing Page](./src/assets/digital%20medical%20records.png)
+
 This project is a Minimum Viable Product (MVP) for a micro-SaaS platform designed for healthcare professionals (doctors, nutritionists, physiotherapists, etc.) to provide their patients with an organized and practical way to manage medical records, including exams, medications, history, and vaccinations. The main goal is to make consultations more efficient and increase patient retention.
 
 ## Database
