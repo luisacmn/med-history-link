@@ -1,73 +1,32 @@
-# Welcome to your Lovable project
+# Digital Health Records Micro-SaaS (MVP)
 
-## Project info
+![Status](https://img.shields.io/badge/status-MVP-yellow)
 
-**URL**: https://lovable.dev/projects/d270489c-6ab0-4ee6-bae1-582deb76aa36
+This project is a Minimum Viable Product (MVP) for a micro-SaaS platform designed for healthcare professionals (doctors, nutritionists, physiotherapists, etc.) to provide their patients with an organized and practical way to manage medical records, including exams, medications, history, and vaccinations. The main goal is to make consultations more efficient and increase patient retention.
 
-## How can I edit this code?
+## Database
+The application uses **Supabase** as the database backend.
 
-There are several ways of editing your application.
+## How It Works
+- **Professional registration:** Healthcare professionals register patients at the time of appointment scheduling by sending a link or QR code for the patient to sign up.  
+- **Patient dashboard:** Patients can access all their information through an organized dashboard with tabs for exams, medications, vaccinations, and medical history. They can view their records and upload new documents (PDF/PNG) via a modal form.  
+- **Professional dashboard:** Professionals can view the full list of patients, including the date of the last consultation and complete medical history.
 
-**Use Lovable**
+## Monetization
+- The **Basic Plan** allows registering up to 5 patients.  
+- For additional patients, the **Pro Plan** can be purchased.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d270489c-6ab0-4ee6-bae1-582deb76aa36) and start prompting.
+## Features to Implement
+- **Authentication:** User login and registration for professionals, patients, and admin accounts.  
+- **Stripe API payments:** Upgrade plans and handle subscriptions securely.  
+- **Database updates for patient history:** Create, edit, delete items (medications, exams, vaccinations, history) and display them in the patient dashboard.  
+- **Admin accounts for healthcare professionals:** Professionals can create admin/secretary accounts to register new patients, enabling team collaboration.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Scalability
+The MVP can be scaled for clinics and hospitals, allowing registration of multiple professionals and patients. The platform aims to provide a service that increases patient loyalty and streamlines consultation workflows.
 
-**Use your preferred IDE**
+## Demo
+You can check out the live demo of the application here: [Digital Health Records MVP](https://med-history-link.lovable.app/)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/d270489c-6ab0-4ee6-bae1-582deb76aa36) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
