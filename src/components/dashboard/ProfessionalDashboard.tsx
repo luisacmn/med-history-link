@@ -13,7 +13,7 @@ const ProfessionalDashboard = () => {
     name: "Maria Silva",
     email: "maria@email.com",
     lastVisit: "15/12/2024",
-    status: "Ativo",
+    status: "Active",
     avatar: "M",
     documentsCount: 8,
     nextAppointment: "22/12/2024"
@@ -22,7 +22,7 @@ const ProfessionalDashboard = () => {
     name: "João Santos",
     email: "joao@email.com",
     lastVisit: "12/12/2024",
-    status: "Ativo",
+    status: "Active",
     avatar: "J",
     documentsCount: 5,
     nextAppointment: "20/12/2024"
@@ -31,7 +31,7 @@ const ProfessionalDashboard = () => {
     name: "Ana Costa",
     email: "ana@email.com",
     lastVisit: "10/12/2024",
-    status: "Pendente",
+    status: "Pending",
     avatar: "A",
     documentsCount: 3,
     nextAppointment: null
@@ -40,33 +40,33 @@ const ProfessionalDashboard = () => {
     name: "Carlos Oliveira",
     email: "carlos@email.com",
     lastVisit: "08/12/2024",
-    status: "Ativo",
+    status: "Active",
     avatar: "C",
     documentsCount: 12,
     nextAppointment: "18/12/2024"
   }];
   const stats = [{
-    title: "Total de Pacientes",
+    title: "Total Patients",
     value: "4",
-    description: "2 novos este mês",
+    description: "2 new this month",
     icon: Users,
     color: "text-primary"
   }, {
-    title: "Consultas Hoje",
+    title: "Today's Appointments",
     value: "3",
-    description: "2 pendentes",
+    description: "2 pending",
     icon: Calendar,
     color: "text-accent"
   }, {
-    title: "Documentos",
+    title: "Documents",
     value: "28",
-    description: "5 novos esta semana",
+    description: "5 new this week",
     icon: FileText,
     color: "text-primary"
   }, {
-    title: "Taxa de Adesão",
+    title: "Adherence Rate",
     value: "85%",
-    description: "↑ 12% vs mês anterior",
+    description: "↑ 12% vs last month",
     icon: Activity,
     color: "text-accent"
   }];
@@ -87,7 +87,7 @@ const ProfessionalDashboard = () => {
             
             <Button variant="medical" onClick={() => setAddPatientModalOpen(true)}>
               <Plus className="w-4 h-4" />
-              Adicionar Paciente
+              Add Patient
             </Button>
           </div>
         </div>
@@ -117,17 +117,17 @@ const ProfessionalDashboard = () => {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
-                  Meus Pacientes
+                  My Patients
                 </CardTitle>
                 <CardDescription>
-                  Gerencie o histórico e dados dos seus pacientes
+                  Manage your patients' history and data
                 </CardDescription>
               </div>
               
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                  <Input placeholder="Buscar paciente..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10 w-64" />
+                  <Input placeholder="Search patient..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10 w-64" />
                 </div>
               </div>
             </div>
@@ -148,22 +148,22 @@ const ProfessionalDashboard = () => {
                           <p className="text-sm text-muted-foreground">{patient.email}</p>
                           <div className="flex items-center gap-4 mt-2">
                             <span className="text-xs text-muted-foreground">
-                              Última consulta: {patient.lastVisit}
+                              Last visit: {patient.lastVisit}
                             </span>
                             <span className="text-xs text-muted-foreground">
-                              {patient.documentsCount} documentos
+                              {patient.documentsCount} documents
                             </span>
                           </div>
                         </div>
                       </div>
                       
                       <div className="flex items-center gap-3">
-                        <Badge variant={patient.status === "Ativo" ? "default" : "secondary"}>
+                        <Badge variant={patient.status === "Active" ? "default" : "secondary"}>
                           {patient.status}
                         </Badge>
                         
                         {patient.nextAppointment && <div className="text-right">
-                            <p className="text-xs text-muted-foreground">Próxima consulta</p>
+                            <p className="text-xs text-muted-foreground">Next appointment</p>
                             <p className="text-sm font-medium text-foreground">{patient.nextAppointment}</p>
                           </div>}
                         
@@ -178,13 +178,13 @@ const ProfessionalDashboard = () => {
             
             {patients.length === 0 && <div className="text-center py-12">
                 <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">Nenhum paciente cadastrado</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">No patients registered</h3>
                 <p className="text-muted-foreground mb-6">
-                  Comece adicionando seu primeiro paciente ou enviando um convite
+                  Start by adding your first patient or sending an invitation
                 </p>
                 <Button variant="medical" onClick={() => setAddPatientModalOpen(true)}>
                   <Plus className="w-4 h-4" />
-                  Adicionar Primeiro Paciente
+                  Add First Patient
                 </Button>
               </div>}
           </CardContent>

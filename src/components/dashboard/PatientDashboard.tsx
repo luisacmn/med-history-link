@@ -28,60 +28,60 @@ const PatientDashboard = () => {
   const exams = [
     {
       id: 1,
-      name: "Hemograma Completo",
+      name: "Complete Blood Count",
       date: "15/12/2024",
-      type: "Laboratório",
-      file: "hemograma-12-2024.pdf"
+      type: "Laboratory",
+      file: "cbc-12-2024.pdf"
     },
     {
       id: 2,
-      name: "Raio-X Tórax",
+      name: "Chest X-Ray",
       date: "10/12/2024",
-      type: "Imagem",
-      file: "raio-x-torax.pdf"
+      type: "Imaging",
+      file: "chest-xray.pdf"
     },
     {
       id: 3,
-      name: "Eletrocardiograma",
+      name: "Electrocardiogram",
       date: "05/12/2024",
-      type: "Cardiológico",
-      file: "ecg-dezembro.pdf"
+      type: "Cardiology",
+      file: "ecg-december.pdf"
     }
   ];
 
   const vaccines = [
     {
       id: 1,
-      name: "COVID-19 (4ª dose)",
+      name: "COVID-19 (4th dose)",
       date: "01/11/2024",
       batch: "CV2024001",
-      location: "UBS Centro"
+      location: "Central Health Unit"
     },
     {
       id: 2,
       name: "Influenza 2024",
       date: "15/03/2024",
       batch: "FLU24003",
-      location: "Clínica Particular"
+      location: "Private Clinic"
     }
   ];
 
   const medications = [
     {
       id: 1,
-      name: "Losartana 50mg",
-      dosage: "1 comprimido",
-      frequency: "1x ao dia",
+      name: "Losartan 50mg",
+      dosage: "1 tablet",
+      frequency: "Once daily",
       startDate: "01/10/2024",
-      status: "Ativo"
+      status: "Active"
     },
     {
       id: 2,
-      name: "Omeprazol 20mg",
-      dosage: "1 cápsula",
-      frequency: "1x ao dia (jejum)",
+      name: "Omeprazole 20mg",
+      dosage: "1 capsule",
+      frequency: "Once daily (fasting)",
       startDate: "15/11/2024",
-      status: "Ativo"
+      status: "Active"
     }
   ];
 
@@ -89,40 +89,40 @@ const PatientDashboard = () => {
     {
       id: 1,
       date: "15/12/2024",
-      type: "Consulta",
-      description: "Consulta cardiológica de rotina. Pressão arterial controlada.",
+      type: "Consultation",
+      description: "Routine cardiology consultation. Blood pressure under control.",
       professional: "Dr. João Médico"
     },
     {
       id: 2,
       date: "10/12/2024",
-      type: "Exame",
-      description: "Realização de Raio-X do tórax. Resultado normal.",
-      professional: "Clínica RadiMed"
+      type: "Exam",
+      description: "Chest X-ray performed. Normal results.",
+      professional: "RadiMed Clinic"
     }
   ];
 
   const stats = [
     {
-      title: "Exames",
+      title: "Exams",
       value: exams.length,
       icon: FileText,
       color: "text-primary"
     },
     {
-      title: "Vacinas",
+      title: "Vaccines",
       value: vaccines.length,
       icon: Syringe,
       color: "text-accent"
     },
     {
-      title: "Medicações",
-      value: medications.filter(m => m.status === "Ativo").length,
+      title: "Medications",
+      value: medications.filter(m => m.status === "Active").length,
       icon: Pill,
       color: "text-primary"
     },
     {
-      title: "Histórico",
+      title: "History",
       value: history.length,
       icon: History,
       color: "text-accent"
@@ -174,13 +174,13 @@ const PatientDashboard = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground">Maria Silva</h1>
-                <p className="text-sm text-muted-foreground">Paciente - Dr. João Médico</p>
+                <p className="text-sm text-muted-foreground">Patient - Dr. João Médico</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
               <Badge variant="default" className="bg-accent">
-                Próxima consulta: 22/12
+                Next appointment: 22/12
               </Badge>
               <Button variant="outline" onClick={handleExportPDF}>
                 <FileDown className="w-4 h-4" />
@@ -188,7 +188,7 @@ const PatientDashboard = () => {
               </Button>
               <Button variant="outline">
                 <Calendar className="w-4 h-4" />
-                Agendar
+                Schedule
               </Button>
             </div>
           </div>
@@ -216,28 +216,28 @@ const PatientDashboard = () => {
         {/* Main Content */}
         <Card className="soft-shadow">
           <CardHeader>
-            <CardTitle>Meu Histórico Médico</CardTitle>
+            <CardTitle>My Medical History</CardTitle>
             <CardDescription>
-              Organize seus exames, vacinas e medicações em um só lugar
+              Organize your exams, vaccines and medications in one place
             </CardDescription>
           </CardHeader>
           
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="exams">Exames</TabsTrigger>
-                <TabsTrigger value="vaccines">Vacinas</TabsTrigger>
-                <TabsTrigger value="medications">Medicações</TabsTrigger>
-                <TabsTrigger value="history">Histórico</TabsTrigger>
+                <TabsTrigger value="exams">Exams</TabsTrigger>
+                <TabsTrigger value="vaccines">Vaccines</TabsTrigger>
+                <TabsTrigger value="medications">Medications</TabsTrigger>
+                <TabsTrigger value="history">History</TabsTrigger>
               </TabsList>
               
               {/* Exams Tab */}
               <TabsContent value="exams" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Exames</h3>
+                  <h3 className="text-lg font-semibold">Exams</h3>
                   <Button variant="medical" onClick={() => openUploadModal("exams")}>
                     <Upload className="w-4 h-4" />
-                    Adicionar Exame
+                    Add Exam
                   </Button>
                 </div>
                 
@@ -269,10 +269,10 @@ const PatientDashboard = () => {
               {/* Vaccines Tab */}
               <TabsContent value="vaccines" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Cartão de Vacinação</h3>
+                  <h3 className="text-lg font-semibold">Vaccination Card</h3>
                   <Button variant="accent" onClick={() => openUploadModal("vaccines")}>
                     <Plus className="w-4 h-4" />
-                    Adicionar Vacina
+                    Add Vaccine
                   </Button>
                 </div>
                 
@@ -286,12 +286,12 @@ const PatientDashboard = () => {
                             <div>
                               <h4 className="font-medium text-foreground">{vaccine.name}</h4>
                               <p className="text-sm text-muted-foreground">
-                                {vaccine.date} • Lote: {vaccine.batch}
+                                {vaccine.date} • Batch: {vaccine.batch}
                               </p>
                               <p className="text-xs text-muted-foreground">{vaccine.location}</p>
                             </div>
                           </div>
-                          <Badge variant="default">Aplicada</Badge>
+                          <Badge variant="default">Applied</Badge>
                         </div>
                       </CardContent>
                     </Card>
@@ -302,10 +302,10 @@ const PatientDashboard = () => {
               {/* Medications Tab */}
               <TabsContent value="medications" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Medicações Atuais</h3>
+                  <h3 className="text-lg font-semibold">Current Medications</h3>
                   <Button variant="medical" onClick={() => openUploadModal("medications")}>
                     <Plus className="w-4 h-4" />
-                    Adicionar Medicação
+                    Add Medication
                   </Button>
                 </div>
                 
@@ -322,12 +322,12 @@ const PatientDashboard = () => {
                                 {medication.dosage} • {medication.frequency}
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                Iniciado em: {medication.startDate}
+                                Started on: {medication.startDate}
                               </p>
                             </div>
                           </div>
                           <Badge 
-                            variant={medication.status === "Ativo" ? "default" : "secondary"}
+                            variant={medication.status === "Active" ? "default" : "secondary"}
                           >
                             {medication.status}
                           </Badge>
@@ -341,10 +341,10 @@ const PatientDashboard = () => {
               {/* History Tab */}
               <TabsContent value="history" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Histórico Clínico</h3>
+                  <h3 className="text-lg font-semibold">Clinical History</h3>
                   <Button variant="accent" onClick={() => openUploadModal("history")}>
                     <Plus className="w-4 h-4" />
-                    Adicionar Entrada
+                    Add Entry
                   </Button>
                 </div>
                 
