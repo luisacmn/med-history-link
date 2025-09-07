@@ -333,7 +333,7 @@ const UploadDocumentModal = ({ isOpen, onClose, documentType }: UploadDocumentMo
           <div className="space-y-2">
             <Label>Document File *</Label>
             {!selectedFile ? (
-              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+              <label className="block border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
                 <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
                 <div className="space-y-1">
                   <p className="text-sm font-medium">Click to upload or drag and drop</p>
@@ -343,9 +343,9 @@ const UploadDocumentModal = ({ isOpen, onClose, documentType }: UploadDocumentMo
                   type="file"
                   onChange={handleFileSelect}
                   accept=".pdf,.jpg,.jpeg,.png"
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  className="hidden"
                 />
-              </div>
+              </label>
             ) : (
               <Card>
                 <CardContent className="p-4">
