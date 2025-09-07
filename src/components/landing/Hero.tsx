@@ -10,8 +10,8 @@ const Hero = () => {
             <div className="mb-6">
               <img src={medicalIcon} alt="Prontuário Digital" className="w-16 h-16 mx-auto lg:mx-0 mb-4" />
               <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Prontuário Digital
-                <span className="block text-primary">Record</span>
+                Digital Medical
+                <span className="block text-primary">Records</span>
               </h1>
             </div>
             

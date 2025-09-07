@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Hero from "@/components/landing/Hero";
+import SocialProof from "@/components/landing/SocialProof";
 import PricingSection from "@/components/pricing/PricingSection";
 import AuthModal from "@/components/auth/AuthModal";
 import ProfessionalDashboard from "@/components/dashboard/ProfessionalDashboard";
@@ -16,6 +17,7 @@ const Index = () => {
   }
   return <div className="min-h-screen">
       <Hero />
+      <SocialProof />
       <PricingSection />
       
       {/* Demo Navigation - Remove in production */}

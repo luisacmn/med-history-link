@@ -3,30 +3,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Check, Star } from "lucide-react";
 const PricingSection = () => {
   const plans = [{
-    name: "Gratuito",
-    price: "R$ 0",
-    period: "/mês",
-    description: "Perfeito para começar",
-    features: ["Até 5 pacientes", "Histórico completo", "Upload de exames", "Suporte por email"],
-    buttonText: "Começar Grátis",
+    name: "Free",
+    price: "$0",
+    period: "/month",
+    description: "Perfect to get started",
+    features: ["Up to 5 patients", "Complete history", "Document upload", "Email support"],
+    buttonText: "Start Free",
     variant: "outline" as const,
     popular: false
   }, {
     name: "Pro",
-    price: "R$ 29",
-    period: "/mês",
-    description: "Para profissionais ativos",
-    features: ["Até 50 pacientes", "Histórico completo", "Upload de exames", "Observações privadas", "Relatórios básicos", "Suporte prioritário"],
-    buttonText: "Escolher Pro",
+    price: "$29",
+    period: "/month",
+    description: "For active professionals",
+    features: ["Up to 50 patients", "Complete history", "Document upload", "Private notes", "Basic reports", "Priority support"],
+    buttonText: "Choose Pro",
     variant: "medical" as const,
     popular: true
   }, {
     name: "Premium",
-    price: "R$ 79",
-    period: "/mês",
-    description: "Para consultórios maiores",
-    features: ["Pacientes ilimitados", "Histórico completo", "Upload de exames", "Observações privadas", "Relatórios avançados", "Exportação de dados", "API personalizada", "Suporte 24/7"],
-    buttonText: "Escolher Premium",
+    price: "$79",
+    period: "/month",
+    description: "For larger practices",
+    features: ["Unlimited patients", "Complete history", "Document upload", "Private notes", "Advanced reports", "Data export", "Custom API", "24/7 support"],
+    buttonText: "Choose Premium",
     variant: "accent" as const,
     popular: false
   }];
@@ -42,7 +42,7 @@ const PricingSection = () => {
               {plan.popular && <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium flex items-center gap-1">
                     <Star className="w-4 h-4" />
-                    Mais Popular
+                    Most Popular
                   </div>
                 </div>}
               

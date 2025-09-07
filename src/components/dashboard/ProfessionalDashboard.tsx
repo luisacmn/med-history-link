@@ -81,7 +81,7 @@ const ProfessionalDashboard = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground">Dr. Francisco Costa</h1>
-                <p className="text-sm text-muted-foreground">Cardiologist - CRM 12345</p>
+                <p className="text-sm text-muted-foreground">Cardiologist - License 12345</p>
               </div>
             </div>
             
