@@ -76,25 +76,25 @@ const PatientDashboard = () => {
 
   const stats = [
     {
-      title: "Exames",
+      title: "Exams",
       value: exams.length,
       icon: FileText,
       color: "text-primary"
     },
     {
-      title: "Vacinas",
+      title: "Vaccines",
       value: vaccines.length,
       icon: Syringe,
       color: "text-accent"
     },
     {
-      title: "Medicações",
+      title: "Medications",
       value: medications.filter(m => m.still_in_use).length,
       icon: Pill,
       color: "text-primary"
     },
     {
-      title: "Histórico",
+      title: "History",
       value: history.length,
       icon: History,
       color: "text-accent"
@@ -106,7 +106,7 @@ const PatientDashboard = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Carregando dashboard...</p>
+          <p className="text-muted-foreground">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -123,15 +123,15 @@ const PatientDashboard = () => {
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">{userProfile?.full_name || 'Paciente'}</h1>
-                <p className="text-sm text-muted-foreground">Dashboard do Paciente</p>
+                <h1 className="text-xl font-bold text-foreground">{userProfile?.full_name || 'Patient'}</h1>
+                <p className="text-sm text-muted-foreground">Patient Dashboard</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
               <Button variant="outline">
                 <Download className="w-4 h-4" />
-                Exportar PDF
+                Export PDF
               </Button>
               <Button variant="ghost" size="sm" onClick={signOut}>
                 <LogOut className="w-4 h-4" />
@@ -162,29 +162,29 @@ const PatientDashboard = () => {
         {/* Main Content */}
         <Card className="soft-shadow">
           <CardHeader>
-            <CardTitle>Meu Histórico Médico</CardTitle>
+            <CardTitle>My Medical History</CardTitle>
             <CardDescription>
-              Organize seus exames, vacinas e medicações em um só lugar
+              Organize your exams, vaccines and medications in one place
             </CardDescription>
           </CardHeader>
           
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="exams">Exames</TabsTrigger>
-                <TabsTrigger value="vaccines">Vacinas</TabsTrigger>
-                <TabsTrigger value="medications">Medicações</TabsTrigger>
-                <TabsTrigger value="history">Histórico</TabsTrigger>
+                <TabsTrigger value="exams">Exams</TabsTrigger>
+                <TabsTrigger value="vaccines">Vaccines</TabsTrigger>
+                <TabsTrigger value="medications">Medications</TabsTrigger>
+                <TabsTrigger value="history">History</TabsTrigger>
               </TabsList>
               
               {/* Exams Tab */}
               <TabsContent value="exams" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Exames</h3>
+                  <h3 className="text-lg font-semibold">Exams</h3>
                   <AddExamModal onExamAdded={handleDataAdded}>
                     <Button variant="medical">
                       <Upload className="w-4 h-4" />
-                      Adicionar Exame
+                      Add Exam
                     </Button>
                   </AddExamModal>
                 </div>
@@ -193,7 +193,7 @@ const PatientDashboard = () => {
                   {exams.length === 0 ? (
                     <div className="text-center py-8">
                       <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground">Nenhum exame cadastrado ainda</p>
+                      <p className="text-muted-foreground">No exams registered yet</p>
                     </div>
                   ) : (
                     exams.map((exam) => {
@@ -232,11 +232,11 @@ const PatientDashboard = () => {
               {/* Vaccines Tab */}
               <TabsContent value="vaccines" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Cartão de Vacinação</h3>
+                  <h3 className="text-lg font-semibold">Vaccination Card</h3>
                   <AddVaccineModal onVaccineAdded={handleDataAdded}>
                     <Button variant="accent">
                       <Plus className="w-4 h-4" />
-                      Adicionar Vacina
+                      Add Vaccine
                     </Button>
                   </AddVaccineModal>
                 </div>
@@ -251,12 +251,12 @@ const PatientDashboard = () => {
                             <div>
                               <h4 className="font-medium text-foreground">{vaccine.name}</h4>
                               <p className="text-sm text-muted-foreground">
-                                {vaccine.date} • Lote: {vaccine.batch}
+                                {vaccine.date} • Batch: {vaccine.batch}
                               </p>
                               <p className="text-xs text-muted-foreground">{vaccine.location}</p>
                             </div>
                           </div>
-                          <Badge variant="default">Aplicada</Badge>
+                          <Badge variant="default">Applied</Badge>
                         </div>
                       </CardContent>
                     </Card>
@@ -267,11 +267,11 @@ const PatientDashboard = () => {
               {/* Medications Tab */}
               <TabsContent value="medications" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Medicações Atuais</h3>
+                  <h3 className="text-lg font-semibold">Current Medications</h3>
                   <AddMedicationModal onMedicationAdded={handleDataAdded}>
                     <Button variant="medical">
                       <Plus className="w-4 h-4" />
-                      Adicionar Medicação
+                      Add Medication
                     </Button>
                   </AddMedicationModal>
                 </div>
@@ -289,12 +289,12 @@ const PatientDashboard = () => {
                                 {medication.dosage} • {medication.frequency}
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                Iniciado em: {medication.startDate}
+                                Started on: {medication.startDate}
                               </p>
                             </div>
                           </div>
                           <Badge 
-                            variant={medication.status === "Ativo" ? "default" : "secondary"}
+                            variant={medication.status === "Active" ? "default" : "secondary"}
                           >
                             {medication.status}
                           </Badge>
@@ -308,11 +308,11 @@ const PatientDashboard = () => {
               {/* History Tab */}
               <TabsContent value="history" className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">Histórico Clínico</h3>
+                  <h3 className="text-lg font-semibold">Clinical History</h3>
                   <AddHistoryModal onHistoryAdded={handleDataAdded}>
                     <Button variant="accent">
                       <Plus className="w-4 h-4" />
-                      Adicionar Entrada
+                      Add Entry
                     </Button>
                   </AddHistoryModal>
                 </div>

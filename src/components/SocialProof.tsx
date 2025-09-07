@@ -6,25 +6,25 @@ const SocialProof = () => {
     {
       icon: Users,
       value: "+100",
-      label: "Profissionais de saúde já utilizam",
+      label: "Healthcare professionals already using",
       color: "text-primary"
     },
     {
       icon: Shield,
       value: "100%",
-      label: "Dados criptografados e seguros",
+      label: "Encrypted and secure data",
       color: "text-accent"
     },
     {
       icon: CheckCircle,
       value: "+500",
-      label: "Pacientes cadastrados",
+      label: "Registered patients",
       color: "text-primary"
     },
     {
       icon: Star,
       value: "4.9",
-      label: "Avaliação média dos usuários",
+      label: "Average user rating",
       color: "text-accent"
     }
   ];
@@ -32,20 +32,20 @@ const SocialProof = () => {
   const testimonials = [
     {
       name: "Dr. Carlos Silva",
-      specialty: "Cardiologista",
-      text: "Revolucionou minha prática. Agora recebo os dados organizados dos pacientes antes mesmo da consulta.",
+      specialty: "Cardiologist",
+      text: "It revolutionized my practice. Now I receive organized patient data even before the consultation.",
       avatar: "C"
     },
     {
-      name: "Dra. Ana Santos",
-      specialty: "Nutricionista",
-      text: "Meus pacientes adoram poder organizar seus exames e histórico. Me poupa muito tempo nas consultas.",
+      name: "Dr. Ana Santos",
+      specialty: "Nutritionist",
+      text: "My patients love being able to organize their exams and history. It saves me a lot of time in consultations.",
       avatar: "A"
     },
     {
       name: "Dr. João Oliveira",
-      specialty: "Fisioterapeuta",
-      text: "Interface simples e segura. Fácil para os pacientes usarem e prático para nós profissionais.",
+      specialty: "Physical Therapist",
+      text: "Simple and secure interface. Easy for patients to use and practical for us professionals.",
       avatar: "J"
     }
   ];
@@ -56,10 +56,10 @@ const SocialProof = () => {
         {/* Stats Section */}
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Confiado por profissionais de saúde
+            Trusted by healthcare professionals
           </h2>
           <p className="text-lg text-muted-foreground mb-12">
-            Dados seguros, pacientes organizados, consultas mais eficientes
+            Secure data, organized patients, more efficient consultations
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -78,10 +78,10 @@ const SocialProof = () => {
         {/* Testimonials Section */}
         <div className="text-center mb-12">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            O que dizem nossos usuários
+            What our users say
           </h3>
           <p className="text-muted-foreground">
-            Depoimentos reais de profissionais que já transformaram sua prática
+            Real testimonials from professionals who have already transformed their practice
           </p>
         </div>
 
@@ -115,16 +115,16 @@ const SocialProof = () => {
             <CardContent className="p-8">
               <Shield className="w-16 h-16 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-bold text-foreground mb-2">
-                Segurança e Privacidade Garantidas
+                Security and Privacy Guaranteed
               </h3>
               <p className="text-muted-foreground mb-4">
-                Seus dados e dos seus pacientes estão protegidos com criptografia de ponta a ponta, 
-                seguindo as mais rígidas normas de segurança médica.
+                Your data and your patients' data are protected with end-to-end encryption, 
+                following the strictest medical security standards.
               </p>
               <div className="flex justify-center gap-6 text-sm text-muted-foreground">
                 <span className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-primary" />
-                  LGPD Compliance
+                  GDPR Compliance
                 </span>
                 <span className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-primary" />
@@ -132,7 +132,7 @@ const SocialProof = () => {
                 </span>
                 <span className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-primary" />
-                  Backup Automático
+                  Automatic Backup
                 </span>
               </div>
             </CardContent>

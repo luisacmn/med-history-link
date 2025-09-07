@@ -65,30 +65,30 @@ const ProfessionalDashboard = () => {
 
   const stats = [
     {
-      title: "Total de Pacientes",
+      title: "Total Patients",
       value: patients.length.toString(),
-      description: `${patients.length}/5 no plano gratuito`,
+      description: `${patients.length}/5 on free plan`,
       icon: Users,
       color: "text-primary"
     },
     {
-      title: "Consultas Hoje",
+      title: "Appointments Today",
       value: "0",
-      description: "Nenhuma agendada",
+      description: "None scheduled",
       icon: Calendar,
       color: "text-accent"
     },
     {
-      title: "Documentos",
+      title: "Documents",
       value: "0",
-      description: "Aguardando pacientes",
+      description: "Waiting for patients",
       icon: FileText,
       color: "text-primary"
     },
     {
-      title: "Taxa de Adesão",
+      title: "Adoption Rate",
       value: "100%",
-      description: "Novos usuários ativos",
+      description: "New active users",
       icon: Activity,
       color: "text-accent"
     }
@@ -99,7 +99,7 @@ const ProfessionalDashboard = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Carregando dashboard...</p>
+          <p className="text-muted-foreground">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -116,8 +116,8 @@ const ProfessionalDashboard = () => {
                 <Stethoscope className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">{userProfile?.full_name || 'Profissional'}</h1>
-                <p className="text-sm text-muted-foreground">Dashboard Profissional</p>
+                <h1 className="text-xl font-bold text-foreground">{userProfile?.full_name || 'Professional'}</h1>
+                <p className="text-sm text-muted-foreground">Professional Dashboard</p>
               </div>
             </div>
             
@@ -125,7 +125,7 @@ const ProfessionalDashboard = () => {
               <AddPatientModal onPatientAdded={handlePatientAdded}>
                 <Button variant="medical">
                   <Plus className="w-4 h-4" />
-                  Adicionar Paciente
+                  Add Patient
                 </Button>
               </AddPatientModal>
               <Button variant="ghost" size="sm" onClick={signOut}>
@@ -162,10 +162,10 @@ const ProfessionalDashboard = () => {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
-                  Meus Pacientes
+                  My Patients
                 </CardTitle>
                 <CardDescription>
-                  Gerencie o histórico e dados dos seus pacientes
+                  Manage your patients' history and data
                 </CardDescription>
               </div>
               
@@ -173,7 +173,7 @@ const ProfessionalDashboard = () => {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
-                    placeholder="Buscar paciente..."
+                    placeholder="Search patient..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 w-64"
@@ -208,7 +208,7 @@ const ProfessionalDashboard = () => {
                               <p className="text-sm text-muted-foreground">{patient.email}</p>
                               <div className="flex items-center gap-4 mt-2">
                                 <span className="text-xs text-muted-foreground">
-                                  Cadastrado em: {formattedDate}
+                                  Registered on: {formattedDate}
                                 </span>
                                 {patient.phone && (
                                   <span className="text-xs text-muted-foreground">
@@ -221,7 +221,7 @@ const ProfessionalDashboard = () => {
                           
                           <div className="flex items-center gap-3">
                             <Badge variant="default">
-                              {patient.patient_id ? "Ativo" : "Aguardando"}
+                              {patient.patient_id ? "Active" : "Pending"}
                             </Badge>
                             
                             <Button variant="ghost" size="icon">
@@ -238,14 +238,14 @@ const ProfessionalDashboard = () => {
             {patients.length === 0 && (
               <div className="text-center py-12">
                 <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">Nenhum paciente cadastrado</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">No patients registered</h3>
                 <p className="text-muted-foreground mb-6">
-                  Comece adicionando seu primeiro paciente para gerenciar os históricos médicos
+                  Start by adding your first patient to manage medical records
                 </p>
                 <AddPatientModal onPatientAdded={handlePatientAdded}>
                   <Button variant="medical">
                     <Plus className="w-4 h-4" />
-                    Adicionar Primeiro Paciente
+                    Add First Patient
                   </Button>
                 </AddPatientModal>
               </div>

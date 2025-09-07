@@ -56,29 +56,29 @@ const AuthModal = ({ children }: AuthModalProps) => {
             <div className="mx-auto mb-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center">
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
-            <CardTitle className="text-2xl">Acesse sua conta</CardTitle>
+            <CardTitle className="text-2xl">Access your account</CardTitle>
             <CardDescription>
-              Entre ou crie sua conta para começar a usar o Prontuário Digital
+              Sign in or create your account to start using Digital Medical Records
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="login">Entrar</TabsTrigger>
-                <TabsTrigger value="register">Cadastrar</TabsTrigger>
+                <TabsTrigger value="login">Sign In</TabsTrigger>
+                <TabsTrigger value="register">Register</TabsTrigger>
               </TabsList>
               
               {/* Login Form */}
               <TabsContent value="login" className="space-y-4">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email-login">E-mail</Label>
+                    <Label htmlFor="email-login">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="email-login"
                         type="email"
-                        placeholder="seu@email.com"
+                        placeholder="your@email.com"
                         className="pl-10"
                         value={loginData.email}
                         onChange={(e) => setLoginData({...loginData, email: e.target.value})}
@@ -88,13 +88,13 @@ const AuthModal = ({ children }: AuthModalProps) => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="password-login">Senha</Label>
+                    <Label htmlFor="password-login">Password</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="password-login"
                         type="password"
-                        placeholder="Digite sua senha"
+                        placeholder="Enter your password"
                         className="pl-10"
                         value={loginData.password}
                         onChange={(e) => setLoginData({...loginData, password: e.target.value})}
@@ -104,12 +104,12 @@ const AuthModal = ({ children }: AuthModalProps) => {
                   </div>
                   
                   <Button type="submit" className="w-full" variant="medical" disabled={loading}>
-                    {loading ? "Entrando..." : "Entrar"}
+                    {loading ? "Signing in..." : "Sign In"}
                   </Button>
                   
                   <div className="text-center">
                     <Button type="button" variant="link" className="text-sm">
-                      Esqueceu sua senha?
+                      Forgot your password?
                     </Button>
                   </div>
                 </form>
@@ -127,7 +127,7 @@ const AuthModal = ({ children }: AuthModalProps) => {
                       className="flex flex-col h-20 gap-2"
                     >
                       <Stethoscope className="w-5 h-5" />
-                      <span className="text-xs">Profissional</span>
+                      <span className="text-xs">Professional</span>
                     </Button>
                     <Button
                       type="button"
@@ -136,18 +136,18 @@ const AuthModal = ({ children }: AuthModalProps) => {
                       className="flex flex-col h-20 gap-2"
                     >
                       <User className="w-5 h-5" />
-                      <span className="text-xs">Paciente</span>
+                      <span className="text-xs">Patient</span>
                     </Button>
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="name">Nome Completo</Label>
+                    <Label htmlFor="name">Full Name</Label>
                     <div className="relative">
                       <UserPlus className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="name"
                         type="text"
-                        placeholder="Seu nome completo"
+                        placeholder="Your full name"
                         className="pl-10"
                         value={registerData.name}
                         onChange={(e) => setRegisterData({...registerData, name: e.target.value})}
@@ -157,13 +157,13 @@ const AuthModal = ({ children }: AuthModalProps) => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="email-register">E-mail</Label>
+                    <Label htmlFor="email-register">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="email-register"
                         type="email"
-                        placeholder="seu@email.com"
+                        placeholder="your@email.com"
                         className="pl-10"
                         value={registerData.email}
                         onChange={(e) => setRegisterData({...registerData, email: e.target.value})}
@@ -173,13 +173,13 @@ const AuthModal = ({ children }: AuthModalProps) => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="password-register">Senha</Label>
+                    <Label htmlFor="password-register">Password</Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="password-register"
                         type="password"
-                        placeholder="Crie uma senha segura"
+                        placeholder="Create a secure password"
                         className="pl-10"
                         value={registerData.password}
                         onChange={(e) => setRegisterData({...registerData, password: e.target.value})}
@@ -194,11 +194,11 @@ const AuthModal = ({ children }: AuthModalProps) => {
                     variant={userType === "professional" ? "medical" : "accent"}
                     disabled={loading}
                   >
-                    {loading ? "Criando..." : `Criar Conta ${userType === "professional" ? "Profissional" : "de Paciente"}`}
+                    {loading ? "Creating..." : `Create ${userType === "professional" ? "Professional" : "Patient"} Account`}
                   </Button>
                   
                   <p className="text-xs text-muted-foreground text-center">
-                    Ao criar uma conta, você concorda com nossos termos de uso e política de privacidade.
+                    By creating an account, you agree to our terms of use and privacy policy.
                   </p>
                 </form>
               </TabsContent>

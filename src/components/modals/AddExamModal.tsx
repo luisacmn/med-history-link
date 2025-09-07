@@ -16,14 +16,14 @@ interface AddExamModalProps {
 }
 
 const EXAM_TYPES = [
-  "Laboratório",
-  "Imagem",
-  "Cardiológico",
-  "Neurológico",
-  "Oftalmológico",
-  "Audiológico",
-  "Endoscópico",
-  "Outros"
+  "Laboratory",
+  "Imaging",
+  "Cardiology",
+  "Neurology",
+  "Ophthalmology",
+  "Audiology",
+  "Endoscopy",
+  "Others"
 ];
 
 export default function AddExamModal({ children, onExamAdded }: AddExamModalProps) {
@@ -53,7 +53,7 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
         .single();
 
       if (!profile) {
-        throw new Error('Perfil não encontrado');
+        throw new Error('Profile not found');
       }
 
       let fileUrl = null;
@@ -90,8 +90,8 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
       if (error) throw error;
 
       toast({
-        title: "Exame adicionado com sucesso!",
-        description: "O exame foi salvo no seu histórico médico."
+        title: "Exam added successfully!",
+        description: "The exam has been saved to your medical history."
       });
 
       resetForm();
@@ -99,7 +99,7 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
       onExamAdded?.();
     } catch (error: any) {
       toast({
-        title: "Erro ao adicionar exame",
+        title: "Error adding exam",
         description: error.message,
         variant: "destructive"
       });
@@ -132,27 +132,27 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileText className="w-5 h-5" />
-            Adicionar Exame
+            Add Exam
           </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Nome do Exame *</Label>
+            <Label htmlFor="name">Exam Name *</Label>
             <Input
               id="name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              placeholder="Ex: Hemograma Completo"
+              placeholder="Ex: Complete Blood Count"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="exam_type">Tipo de Exame *</Label>
+            <Label htmlFor="exam_type">Exam Type *</Label>
             <Select value={formData.exam_type} onValueChange={(value) => setFormData({...formData, exam_type: value})}>
               <SelectTrigger>
-                <SelectValue placeholder="Selecione o tipo de exame" />
+                <SelectValue placeholder="Select exam type" />
               </SelectTrigger>
               <SelectContent>
                 {EXAM_TYPES.map((type) => (
@@ -163,7 +163,7 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="exam_date">Data do Exame *</Label>
+            <Label htmlFor="exam_date">Exam Date *</Label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -178,7 +178,7 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="file">Arquivo do Exame</Label>
+            <Label htmlFor="file">Exam File</Label>
             <div className="relative">
               <Upload className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -190,27 +190,27 @@ export default function AddExamModal({ children, onExamAdded }: AddExamModalProp
               />
             </div>
             <p className="text-xs text-muted-foreground">
-              Formatos aceitos: PDF, JPG, PNG, DOC, DOCX (máx. 10MB)
+              Accepted formats: PDF, JPG, PNG, DOC, DOCX (max. 10MB)
             </p>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="notes">Observações</Label>
+            <Label htmlFor="notes">Notes</Label>
             <Textarea
               id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({...formData, notes: e.target.value})}
-              placeholder="Observações adicionais sobre o exame..."
+              placeholder="Additional notes about the exam..."
               rows={3}
             />
           </div>
           
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="medical" disabled={loading} className="flex-1">
-              {loading ? "Salvando..." : "Salvar Exame"}
+              {loading ? "Saving..." : "Save Exam"}
             </Button>
           </div>
         </form>

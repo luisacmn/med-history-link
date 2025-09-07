@@ -42,7 +42,7 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
         .single();
 
       if (!profile) {
-        throw new Error('Perfil do profissional não encontrado');
+        throw new Error('Professional profile not found');
       }
 
       // Check patient limit (5 for free plan)
@@ -53,8 +53,8 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
 
       if (count && count >= 5) {
         toast({
-          title: "Limite atingido",
-          description: "Você atingiu o limite de 5 pacientes no plano gratuito. Faça upgrade para adicionar mais pacientes.",
+          title: "Limit reached",
+          description: "You have reached the limit of 5 patients on the free plan. Upgrade to add more patients.",
           variant: "destructive"
         });
         setLoading(false);
@@ -82,14 +82,14 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
       setGeneratedLink(accessLink);
 
       toast({
-        title: "Paciente adicionado com sucesso!",
-        description: "Link de acesso gerado. Compartilhe com o paciente."
+        title: "Patient added successfully!",
+        description: "Access link generated. Share with the patient."
       });
 
       onPatientAdded?.();
     } catch (error: any) {
       toast({
-        title: "Erro ao adicionar paciente",
+        title: "Error adding patient",
         description: error.message,
         variant: "destructive"
       });
@@ -101,8 +101,8 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
   const copyLink = () => {
     navigator.clipboard.writeText(generatedLink);
     toast({
-      title: "Link copiado!",
-      description: "O link foi copiado para a área de transferência."
+      title: "Link copied!",
+      description: "The link has been copied to the clipboard."
     });
   };
 
@@ -130,7 +130,7 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle className="text-center">Paciente Adicionado com Sucesso!</DialogTitle>
+            <DialogTitle className="text-center">Patient Added Successfully!</DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
@@ -139,9 +139,9 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
                 <div className="text-center space-y-4">
                   <QrCode className="w-16 h-16 mx-auto text-primary" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Link de Acesso Gerado</h3>
+                    <h3 className="font-semibold text-lg mb-2">Access Link Generated</h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Compartilhe este link com {formData.name} para que ele possa acessar e cadastrar seu prontuário:
+                      Share this link with {formData.name} so they can access and register their medical record:
                     </p>
                     
                     <div className="bg-background border rounded-lg p-3 mb-4">
@@ -150,7 +150,7 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
                     
                     <Button onClick={copyLink} className="w-full" variant="medical">
                       <Copy className="w-4 h-4 mr-2" />
-                      Copiar Link
+                      Copy Link
                     </Button>
                   </div>
                 </div>
@@ -159,10 +159,10 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
             
             <div className="text-center space-y-2">
               <p className="text-sm text-muted-foreground">
-                O paciente poderá usar este link para acessar a plataforma e organizar seus dados médicos.
+                The patient will be able to use this link to access the platform and organize their medical data.
               </p>
               <Button variant="outline" onClick={handleClose} className="w-full">
-                Concluir
+                Done
               </Button>
             </div>
           </div>
@@ -180,24 +180,24 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <UserPlus className="w-5 h-5" />
-            Adicionar Novo Paciente
+            Add New Patient
           </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Nome Completo *</Label>
+            <Label htmlFor="name">Full Name *</Label>
             <Input
               id="name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              placeholder="Nome completo do paciente"
+              placeholder="Patient's full name"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="email">E-mail *</Label>
+            <Label htmlFor="email">Email *</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -205,7 +205,7 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                placeholder="email@exemplo.com"
+                placeholder="email@example.com"
                 className="pl-10"
                 required
               />
@@ -213,7 +213,7 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="phone">Telefone *</Label>
+            <Label htmlFor="phone">Phone *</Label>
             <div className="relative">
               <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -229,7 +229,7 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
           
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="birth_date">Data de Nascimento</Label>
+              <Label htmlFor="birth_date">Date of Birth</Label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -259,10 +259,10 @@ export default function AddPatientModal({ children, onPatientAdded }: AddPatient
           
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="medical" disabled={loading} className="flex-1">
-              {loading ? "Adicionando..." : "Adicionar Paciente"}
+              {loading ? "Adding..." : "Add Patient"}
             </Button>
           </div>
         </form>

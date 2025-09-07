@@ -39,7 +39,7 @@ export default function AddVaccineModal({ children, onVaccineAdded }: AddVaccine
         .single();
 
       if (!profile) {
-        throw new Error('Perfil não encontrado');
+        throw new Error('Profile not found');
       }
 
       let fileUrl = null;
@@ -75,8 +75,8 @@ export default function AddVaccineModal({ children, onVaccineAdded }: AddVaccine
       if (error) throw error;
 
       toast({
-        title: "Vacina adicionada com sucesso!",
-        description: "A vacina foi salva no seu cartão de vacinação."
+        title: "Vaccine added successfully!",
+        description: "The vaccine has been saved to your vaccination card."
       });
 
       resetForm();
@@ -84,7 +84,7 @@ export default function AddVaccineModal({ children, onVaccineAdded }: AddVaccine
       onVaccineAdded?.();
     } catch (error: any) {
       toast({
-        title: "Erro ao adicionar vacina",
+        title: "Error adding vaccine",
         description: error.message,
         variant: "destructive"
       });
@@ -116,24 +116,24 @@ export default function AddVaccineModal({ children, onVaccineAdded }: AddVaccine
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Syringe className="w-5 h-5" />
-            Adicionar Vacina
+            Add Vaccine
           </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Nome da Vacina *</Label>
+            <Label htmlFor="name">Vaccine Name *</Label>
             <Input
               id="name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              placeholder="Ex: COVID-19 (4ª dose)"
+              placeholder="Ex: COVID-19 (4th dose)"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="vaccine_date">Data da Aplicação *</Label>
+            <Label htmlFor="vaccine_date">Application Date *</Label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -148,21 +148,21 @@ export default function AddVaccineModal({ children, onVaccineAdded }: AddVaccine
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="location">Local de Aplicação</Label>
+            <Label htmlFor="location">Application Location</Label>
             <div className="relative">
               <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 id="location"
                 value={formData.location}
                 onChange={(e) => setFormData({...formData, location: e.target.value})}
-                placeholder="Ex: UBS Centro, Clínica Particular"
+                placeholder="Ex: Public Health Center, Private Clinic"
                 className="pl-10"
               />
             </div>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="file">Comprovante (Opcional)</Label>
+            <Label htmlFor="file">Proof (Optional)</Label>
             <div className="relative">
               <Upload className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -174,16 +174,16 @@ export default function AddVaccineModal({ children, onVaccineAdded }: AddVaccine
               />
             </div>
             <p className="text-xs text-muted-foreground">
-              Formatos aceitos: PDF, JPG, PNG (máx. 10MB)
+              Accepted formats: PDF, JPG, PNG (max. 10MB)
             </p>
           </div>
           
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="accent" disabled={loading} className="flex-1">
-              {loading ? "Salvando..." : "Salvar Vacina"}
+              {loading ? "Saving..." : "Save Vaccine"}
             </Button>
           </div>
         </form>

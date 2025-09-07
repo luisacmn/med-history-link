@@ -42,7 +42,7 @@ export default function AddMedicationModal({ children, onMedicationAdded }: AddM
         .single();
 
       if (!profile) {
-        throw new Error('Perfil não encontrado');
+        throw new Error('Profile not found');
       }
 
       // Insert medication
@@ -61,8 +61,8 @@ export default function AddMedicationModal({ children, onMedicationAdded }: AddM
       if (error) throw error;
 
       toast({
-        title: "Medicação adicionada com sucesso!",
-        description: "A medicação foi salva no seu histórico médico."
+        title: "Medication added successfully!",
+        description: "The medication has been saved to your medical history."
       });
 
       resetForm();
@@ -70,7 +70,7 @@ export default function AddMedicationModal({ children, onMedicationAdded }: AddM
       onMedicationAdded?.();
     } catch (error: any) {
       toast({
-        title: "Erro ao adicionar medicação",
+        title: "Error adding medication",
         description: error.message,
         variant: "destructive"
       });
@@ -104,46 +104,46 @@ export default function AddMedicationModal({ children, onMedicationAdded }: AddM
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Pill className="w-5 h-5" />
-            Adicionar Medicação
+            Add Medication
           </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Nome da Medicação *</Label>
+            <Label htmlFor="name">Medication Name *</Label>
             <Input
               id="name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              placeholder="Ex: Losartana 50mg"
+              placeholder="Ex: Losartan 50mg"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="dose">Dosagem *</Label>
+            <Label htmlFor="dose">Dosage *</Label>
             <Input
               id="dose"
               value={formData.dose}
               onChange={(e) => setFormData({...formData, dose: e.target.value})}
-              placeholder="Ex: 1 comprimido"
+              placeholder="Ex: 1 tablet"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="frequency">Frequência *</Label>
+            <Label htmlFor="frequency">Frequency *</Label>
             <Input
               id="frequency"
               value={formData.frequency}
               onChange={(e) => setFormData({...formData, frequency: e.target.value})}
-              placeholder="Ex: 1x ao dia pela manhã"
+              placeholder="Ex: Once daily in the morning"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="start_date">Data de Início *</Label>
+            <Label htmlFor="start_date">Start Date *</Label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -163,12 +163,12 @@ export default function AddMedicationModal({ children, onMedicationAdded }: AddM
               checked={formData.still_in_use}
               onCheckedChange={(checked) => setFormData({...formData, still_in_use: checked as boolean})}
             />
-            <Label htmlFor="still_in_use">Ainda em uso</Label>
+            <Label htmlFor="still_in_use">Still in use</Label>
           </div>
           
           {!formData.still_in_use && (
             <div className="space-y-2">
-              <Label htmlFor="end_date">Data de Término</Label>
+              <Label htmlFor="end_date">End Date</Label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -184,10 +184,10 @@ export default function AddMedicationModal({ children, onMedicationAdded }: AddM
           
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="medical" disabled={loading} className="flex-1">
-              {loading ? "Salvando..." : "Salvar Medicação"}
+              {loading ? "Saving..." : "Save Medication"}
             </Button>
           </div>
         </form>

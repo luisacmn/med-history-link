@@ -98,50 +98,50 @@ export default function AddHistoryModal({ children, onHistoryAdded }: AddHistory
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <History className="w-5 h-5" />
-            Adicionar ao Histórico
+            Add to History
           </DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Título *</Label>
+            <Label htmlFor="title">Title *</Label>
             <Input
               id="title"
               value={formData.title}
               onChange={(e) => setFormData({...formData, title: e.target.value})}
-              placeholder="Ex: Consulta Cardiológica"
+              placeholder="Ex: Cardiology Consultation"
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="description">Descrição *</Label>
+            <Label htmlFor="description">Description *</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
-              placeholder="Descreva os detalhes da consulta, sintomas, diagnósticos, etc..."
+              placeholder="Describe consultation details, symptoms, diagnoses, etc..."
               rows={4}
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="evaluating_professional">Profissional Responsável</Label>
+            <Label htmlFor="evaluating_professional">Responsible Professional</Label>
             <div className="relative">
               <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 id="evaluating_professional"
                 value={formData.evaluating_professional}
                 onChange={(e) => setFormData({...formData, evaluating_professional: e.target.value})}
-                placeholder="Ex: Dr. João Médico - CRM 12345"
+                placeholder="Ex: Dr. John Smith - License 12345"
                 className="pl-10"
               />
             </div>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="history_date">Data</Label>
+            <Label htmlFor="history_date">Date</Label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -153,16 +153,16 @@ export default function AddHistoryModal({ children, onHistoryAdded }: AddHistory
               />
             </div>
             <p className="text-xs text-muted-foreground">
-              Se não informado, será usado a data atual
+              If not provided, current date will be used
             </p>
           </div>
           
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={handleClose} className="flex-1">
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="accent" disabled={loading} className="flex-1">
-              {loading ? "Salvando..." : "Salvar Entrada"}
+              {loading ? "Saving..." : "Save Entry"}
             </Button>
           </div>
         </form>
