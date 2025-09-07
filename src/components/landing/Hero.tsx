@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Stethoscope, Shield, Users, FileText } from "lucide-react";
 import medicalIcon from "@/assets/medical-icon.png";
-import AuthModal from "@/components/auth/AuthModal";
 
 const Hero = () => {
   return (
@@ -13,28 +12,26 @@ const Hero = () => {
             <div className="mb-6">
               <img 
                 src={medicalIcon} 
-                alt="Digital Medical Records" 
+                alt="Prontuário Digital" 
                 className="w-16 h-16 mx-auto lg:mx-0 mb-4"
               />
               <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Digital Medical
-                <span className="block text-primary">Records</span>
+                Prontuário Digital
+                <span className="block text-primary">Profissional</span>
               </h1>
             </div>
             
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lg:mx-0">
-              Organize your patients' medical history in one place. 
-              Your patients register their data, you get organized and professional access.
+              Organize o histórico dos seus pacientes em um só lugar. 
+              Seus pacientes cadastram os dados, você tem acesso organizado e profissional.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <AuthModal>
-                <Button size="lg" variant="medical" className="text-lg px-8 py-6">
-                  Start for Free
-                </Button>
-              </AuthModal>
+              <Button size="lg" variant="medical" className="text-lg px-8 py-6">
+                Começar Gratuitamente
+              </Button>
               <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                View Demo
+                Ver Demonstração
               </Button>
             </div>
 
@@ -42,20 +39,20 @@ const Hero = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto lg:mx-0">
               <div className="text-center lg:text-left">
                 <FileText className="w-8 h-8 text-primary mx-auto lg:mx-0 mb-2" />
-                <h3 className="font-semibold text-foreground">Complete History</h3>
-                <p className="text-sm text-muted-foreground">Exams, vaccines and medications</p>
+                <h3 className="font-semibold text-foreground">Histórico Completo</h3>
+                <p className="text-sm text-muted-foreground">Exames, vacinas e medicações</p>
               </div>
               
               <div className="text-center lg:text-left">
                 <Users className="w-8 h-8 text-accent mx-auto lg:mx-0 mb-2" />
-                <h3 className="font-semibold text-foreground">Shared Access</h3>
-                <p className="text-sm text-muted-foreground">Patient registers, you consult</p>
+                <h3 className="font-semibold text-foreground">Acesso Compartilhado</h3>
+                <p className="text-sm text-muted-foreground">Paciente cadastra, você consulta</p>
               </div>
               
               <div className="text-center lg:text-left">
                 <Shield className="w-8 h-8 text-primary mx-auto lg:mx-0 mb-2" />
-                <h3 className="font-semibold text-foreground">Secure & Professional</h3>
-                <p className="text-sm text-muted-foreground">Protected and organized data</p>
+                <h3 className="font-semibold text-foreground">Seguro e Profissional</h3>
+                <p className="text-sm text-muted-foreground">Dados protegidos e organizados</p>
               </div>
             </div>
           </div>
@@ -65,8 +62,8 @@ const Hero = () => {
             <div className="relative bg-card rounded-2xl p-8 soft-shadow max-w-md mx-auto">
               <div className="text-center mb-6">
                 <Stethoscope className="w-12 h-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-card-foreground">Professional Dashboard</h3>
-                <p className="text-muted-foreground">Quick access to patient data</p>
+                <h3 className="text-xl font-semibold text-card-foreground">Dashboard do Profissional</h3>
+                <p className="text-muted-foreground">Acesso rápido aos dados dos pacientes</p>
               </div>
               
               <div className="space-y-3">
@@ -76,7 +73,7 @@ const Hero = () => {
                   </div>
                   <div>
                     <p className="font-medium text-sm">Maria Silva</p>
-                    <p className="text-xs text-muted-foreground">Last visit: 15/12</p>
+                    <p className="text-xs text-muted-foreground">Última consulta: 15/12</p>
                   </div>
                 </div>
                 
@@ -86,7 +83,7 @@ const Hero = () => {
                   </div>
                   <div>
                     <p className="font-medium text-sm">João Santos</p>
-                    <p className="text-xs text-muted-foreground">Last visit: 12/12</p>
+                    <p className="text-xs text-muted-foreground">Última consulta: 12/12</p>
                   </div>
                 </div>
                 
@@ -96,13 +93,13 @@ const Hero = () => {
                   </div>
                   <div>
                     <p className="font-medium text-sm">Ana Costa</p>
-                    <p className="text-xs text-muted-foreground">Last visit: 10/12</p>
+                    <p className="text-xs text-muted-foreground">Última consulta: 10/12</p>
                   </div>
                 </div>
               </div>
               
               <Button className="w-full mt-6" variant="accent">
-                + Add Patient
+                + Adicionar Paciente
               </Button>
             </div>
           </div>
